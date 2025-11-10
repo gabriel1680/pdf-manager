@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$manager = new \Gabriellopes\Pdfmanager\PDFManager();
+$files = [
+    ["name" => "test1.pdf", "no" => [4]],
+    ["name" => "test2.pdf"]
+];
+$manager->merge($files);

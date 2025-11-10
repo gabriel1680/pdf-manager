@@ -1,0 +1,23 @@
+{
+    "name": "gabriellopes/pdfmanager",
+    "description": "PDF manager",
+    "type": "project",
+    "require-dev": {
+        "setasign/fpdf": "1.8.*",
+        "setasign/fpdi": "^2.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Gabriellopes\\Pdfmanager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gabriel P. Lopes",
+            "email": "gabriel.lopes1680@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {}
+}
