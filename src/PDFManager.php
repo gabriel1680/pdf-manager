@@ -8,17 +8,18 @@ class PDFManager
 {
     private Fpdi $pdf;
 
-    public function __construct()
+    public function __construct(private FileProvider $fileProvider)
     {
         $this->pdf = new Fpdi();
     }
 
-    public function merge($files): void
+    public function merge(MergePDFRequest $request): void
     {
-        foreach ($files as $file) {
-            $pageCount = $this->pdf->setSourceFile(__DIR__ . "/../resources/" . $file["name"]);
+        foreach ($request->toMerge() as $file) {
+            $stream = $this->fileProvider->getFileWith($file->filename());
+            $pageCount = $this->pdf->setSourceFile($stream);
             for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++) {
-                if (isset($file["no"]) && in_array($pageNumber, $file["no"])) {
+                if (in_array($pageNumber, $file->ignorePages())) {
                     continue;
                 }
                 $templateID = $this->pdf->importPage($pageNumber);
@@ -27,6 +28,70 @@ class PDFManager
                 $this->pdf->useTemplate($templateID, 0, 0, 210);
             }
         }
-        $this->pdf->Output("F", "tmp/doc.pdf", true);
+        $this->pdf->Output("F", "tmp/{$request->outFilename()}.pdf", true);
+    }
+}
+
+class MergePDFRequest
+{
+    private array $toMerge;
+    private string $outFilename;
+
+    public function __construct(string $outFilename, MergePDF ...$toMerge)
+    {
+        $this->toMerge = $toMerge;
+        $this->outFilename = $outFilename;
+    }
+
+    /**
+     * Return the output file name
+     *
+     * @return string
+     */
+    public function outFilename()
+    {
+        return $this->outFilename;
+    }
+
+    /**
+     * Return the files to merge
+     *
+     * @return MergePDF[]
+     */
+    public function toMerge()
+    {
+        return $this->toMerge;
+    }
+}
+
+class MergePDF
+{
+    private string $filename;
+    private array $ignorePages;
+
+    public function __construct(string $filename, array $ignorePages)
+    {
+        $this->filename = $filename;
+        $this->ignorePages = $ignorePages;
+    }
+
+    /**
+     * Return the file name
+     *
+     * @return string
+     */
+    public function filename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Return the pages to be ignored.
+     *
+     * @return int[]
+     */
+    public function ignorePages()
+    {
+        return $this->ignorePages;
     }
 }
