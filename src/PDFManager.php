@@ -37,7 +37,7 @@ class MergePDFRequest
     private array $toMerge;
     private string $outFilename;
 
-    public function __construct(string $outFilename, MergePDF ...$toMerge)
+    public function __construct(string $outFilename, MergePDFFile ...$toMerge)
     {
         $this->toMerge = $toMerge;
         $this->outFilename = $outFilename;
@@ -56,7 +56,7 @@ class MergePDFRequest
     /**
      * Return the files to merge
      *
-     * @return MergePDF[]
+     * @return MergePDFFile[]
      */
     public function toMerge()
     {
@@ -64,7 +64,7 @@ class MergePDFRequest
     }
 }
 
-class MergePDF
+class MergePDFFile
 {
     private string $filename;
     private array $ignorePages;

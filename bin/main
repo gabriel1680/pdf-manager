@@ -1,13 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-use Gabriellopes\Pdfmanager\MergePDF;
-use Gabriellopes\Pdfmanager\MergePDFRequest;
-
 require __DIR__ . '/../vendor/autoload.php';
 
+use Gabriellopes\Pdfmanager\MergePDFRequest;
+use Gabriellopes\Pdfmanager\FileSystemFileProvider;
+use Gabriellopes\Pdfmanager\MergePDFFile;
+use Gabriellopes\Pdfmanager\PDFManager;
+
 $resourcesDir = __DIR__ . "/../resources/";
-$fileProvider = new \Gabriellopes\Pdfmanager\FileSystemFileProvider($resourcesDir);
-$manager = new \Gabriellopes\Pdfmanager\PDFManager($fileProvider);
-$mergeRequest = new MergePDFRequest("new_file", new MergePDF("test1.pdf", [4]), new MergePDF("test2.pdf", []));
+$fileProvider = new FileSystemFileProvider($resourcesDir);
+$manager = new PDFManager($fileProvider);
+$mergeRequest = new MergePDFRequest("new_file", new MergePDFFile("test1.pdf", [1, 2, 3]), new MergePDFFile("test2.pdf", [1]));
 $manager->merge($mergeRequest);
