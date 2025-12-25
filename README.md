@@ -29,6 +29,10 @@ Your data stays **exactly where it belongs: with you**.
 
 > Available PDF operations depend on the commands implemented in the source code.
 
+| Feature | Description |
+|---------|-------------|
+| [Merge PDFs](./Docs/Features/merge.md) | Merge multiple PDFs locally with page selection and exclusion, fully offline and secure |
+
 ---
 
 ## 📦 Requirements
