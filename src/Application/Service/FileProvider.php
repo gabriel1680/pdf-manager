@@ -1,6 +1,6 @@
 <?php
 
-namespace Gabriellopes\Pdfmanager;
+namespace Gabriellopes\Pdfmanager\Application\Service;
 
 interface FileProvider
 {

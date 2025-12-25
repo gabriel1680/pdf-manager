@@ -1,6 +1,8 @@
 <?php
 
-namespace Gabriellopes\Pdfmanager;
+namespace Gabriellopes\Pdfmanager\Out;
+
+use Gabriellopes\Pdfmanager\Application\Service\FileProvider;
 
 class FileSystemFileProvider implements FileProvider
 {
