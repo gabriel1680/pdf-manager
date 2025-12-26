@@ -5,12 +5,12 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Gabriellopes\Pdfmanager\Application\PDFManagerImpl;
 use Gabriellopes\Pdfmanager\Application\UseCase\MergePDF;
-use Gabriellopes\Pdfmanager\Out\FileSystemFileProvider;
-use Gabriellopes\Pdfmanager\In\PDFManagerCli;
+use Gabriellopes\Pdfmanager\In\CLI\PDFManagerCli;
+use Gabriellopes\Pdfmanager\Out\File\FileSystemFileProvider;
 
 $resources = __DIR__ . "/../resources";
 $fileProvider = new FileSystemFileProvider($resources);
 $mergePDF = new MergePDF($fileProvider);
-$service = new PDFManagerImpl($mergePDF);
-$app = new PDFManagerCli($service);
+$pdfManager = new PDFManagerImpl($mergePDF);
+$app = new PDFManagerCli($pdfManager);
 $app->run($argv);

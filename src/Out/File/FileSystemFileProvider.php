@@ -1,6 +1,6 @@
 <?php
 
-namespace Gabriellopes\Pdfmanager\Out;
+namespace Gabriellopes\Pdfmanager\Out\File;
 
 use Gabriellopes\Pdfmanager\Application\Service\FileProvider;
 
@@ -12,7 +12,7 @@ class FileSystemFileProvider implements FileProvider
 
     public function getFileWith(string $filename)
     {
-        $stream = fopen($this->resourcesDir . $filename, self::READ_MODE);
+        $stream = fopen($this->resourcesDir . "/" . $filename, self::READ_MODE);
         if ($stream == false) {
             throw new \Exception("Error reading file: \"{$filename}\"");
         }

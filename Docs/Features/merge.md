@@ -22,7 +22,7 @@ php bin/main merge --spec=merge.json
 The JSON file defines:
 
 1. `output.file` → output PDF file path
-2. `inputs` → array of input PDFs, each with optional `include` and `exclude` pages
+2. `inputs` → array of input PDFs, each with required `exclude` pages
 
 ### Example `merge.json`
 
@@ -34,17 +34,15 @@ The JSON file defines:
   "inputs": [
     {
       "file": "input1.pdf",
-      "include": [1, 2, 3],
-      "exclude": [2]
+      "exclude": [3]
     },
     {
       "file": "input2.pdf",
-      "include": "all",
-      "exclude": [4]
+      "exclude": [1, 2, 4]
     },
     {
       "file": "input3.pdf",
-      "include": [1, 3, 5]
+      "include": [1, 2, 3]
     }
   ]
 }
@@ -55,10 +53,6 @@ The JSON file defines:
 ## Spec Semantics
 
 * **`inputs`** are processed in **order**
-* **`include`**
-
-  * Array → only listed pages are included
-  * `"all"` → include all pages
 * **`exclude`**
 
   * Optional array

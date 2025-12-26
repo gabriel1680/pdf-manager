@@ -1,6 +1,6 @@
 <?php
 
-namespace Gabriellopes\Pdfmanager\In;
+namespace Gabriellopes\Pdfmanager\In\Cli\Command\Merge;
 
 use Gabriellopes\Pdfmanager\MergePDFFile;
 use Gabriellopes\Pdfmanager\MergePDFRequest;
