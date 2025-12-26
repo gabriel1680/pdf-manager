@@ -2,7 +2,7 @@
 
 namespace Gabriellopes\Pdfmanager\In\Cli\Command;
 
-interface CLICommand
+interface CliCommand
 {
     /**
      * Returns an array of expected CLI flags for this command.

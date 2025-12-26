@@ -3,9 +3,9 @@
 namespace Gabriellopes\Pdfmanager\In\Cli\Command\Merge;
 
 use Closure;
-use Gabriellopes\Pdfmanager\In\Cli\Command\CLICommand;
+use Gabriellopes\Pdfmanager\In\Cli\Command\CliCommand;
 
-class MergePDFCommand implements CLICommand
+class MergePDFCommand implements CliCommand
 {
     private MergeSpecValidator $validator;
     private MergeSpecToRequestMapper $mapper;
