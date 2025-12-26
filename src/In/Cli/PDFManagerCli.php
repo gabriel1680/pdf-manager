@@ -38,6 +38,7 @@ class PDFManagerCli
             }
             $options = $this->parseOptionsFrom($args, $command->getOptions());
             $command->run($options);
+            echo "✅ Operation completed.\n";
         } catch (\Throwable $e) {
             fwrite(STDERR, "Error: {$e->getMessage()}\n");
             exit(1);
