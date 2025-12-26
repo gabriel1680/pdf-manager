@@ -52,20 +52,41 @@ cd pdf-manager
 composer install
 ```
 
+### With global installation (optional)
+
+Add the CLI to your PATH (as `pdf-manager`)
+
+```shell
+sudo ln -s "$(pwd)/bin/main" /usr/local/bin/pdf-manager
+```
+
+**Obs.:** It may be necessary to give permissions to execute the main file with `chmod +x ./bin/main`
+
 ---
 
 ## 🗂️ Usage
 
 Run the CLI application from the project root:
 
-```
-php bin/pdf-manager [command] [options]
+```shell
+bin/main [command] [options]
 ```
 
 Example:
 
+```shell
+./bin/main help
 ```
-php bin/pdf-manager help
+
+### With global installation (optional)
+
+```shell
+pdf-manager [command] [options]
+```
+
+Merge
+```shell
+pdf-manager merge --spec=spec-file.json
 ```
 
 ---
@@ -89,7 +110,7 @@ php bin/pdf-manager help
 ```
 pdf-manager/
 ├── bin/
-│   └── pdf-manager      # CLI entry point
+│   └── main             # CLI entry point
 ├── src/                 # Application source code
 ├── composer.json        # Composer configuration
 ├── composer.lock
