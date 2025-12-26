@@ -31,7 +31,7 @@ Your data stays **exactly where it belongs: with you**.
 
 | Feature | Description |
 |---------|-------------|
-| [Merge PDFs](./Docs/Features/merge.md) | Merge multiple PDFs locally with page selection and exclusion, fully offline and secure |
+| [Merge PDFs](./docs/features/merge.md) | Merge multiple PDFs locally with page selection and exclusion, fully offline and secure |
 
 ---
 
