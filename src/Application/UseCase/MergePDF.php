@@ -5,6 +5,7 @@ namespace Gabriellopes\Pdfmanager\Application\UseCase;
 use setasign\Fpdi\Fpdi;
 use Gabriellopes\Pdfmanager\Application\Service\FileProvider;
 use Gabriellopes\Pdfmanager\MergePDFRequest;
+use RuntimeException;
 
 class MergePDF
 {
@@ -17,6 +18,9 @@ class MergePDF
 
     public function execute(MergePDFRequest $request): void
     {
+        if ($request->isEmpty()) {
+            throw new RuntimeException("Empty files to merge");
+        }
         foreach ($request->toMerge() as $file) {
             $stream = $this->fileProvider->getFileWith($file->filename());
             $pageCount = $this->pdf->setSourceFile($stream);

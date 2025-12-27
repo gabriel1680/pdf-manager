@@ -2,14 +2,23 @@
     "name": "gabriellopes/pdfmanager",
     "description": "PDF manager",
     "type": "project",
-    "require-dev": {
+    "require": {
         "setasign/fpdf": "1.8.*",
         "setasign/fpdi": "^2.5"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "phpunit/phpunit": "^12"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "Gabriellopes\\Pdfmanager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "authors": [
@@ -19,5 +28,7 @@
         }
     ],
     "minimum-stability": "alpha",
-    "require": {}
+    "scripts": {
+        "test": "phpunit tests"
+    }
 }

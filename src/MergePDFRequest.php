@@ -43,4 +43,9 @@ class MergePDFRequest
     {
         array_push($this->toMerge, $file);
     }
+
+    public function isEmpty(): bool
+    {
+        return count($this->toMerge()) == 0;
+    }
 }
