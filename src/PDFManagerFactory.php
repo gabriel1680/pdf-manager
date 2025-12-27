@@ -4,14 +4,14 @@ namespace Gabriellopes\Pdfmanager;
 
 use Gabriellopes\Pdfmanager\Application\PDFManagerImpl;
 use Gabriellopes\Pdfmanager\Application\UseCase\MergePDF;
-use Gabriellopes\Pdfmanager\Out\File\FileSystemFileProvider;
+use Gabriellopes\Pdfmanager\Out\File\FpdiService;
 
 class PDFManagerFactory
 {
     public static function create(string $resourcesPath): PDFManager
     {
-        $fileProvider = new FileSystemFileProvider($resourcesPath);
-        $mergePDF = new MergePDF($fileProvider);
+        $pdfHandler = new FpdiService($resourcesPath);
+        $mergePDF = new MergePDF($pdfHandler);
         return new PDFManagerImpl($mergePDF);
     }
 }

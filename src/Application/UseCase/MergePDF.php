@@ -2,19 +2,14 @@
 
 namespace Gabriellopes\Pdfmanager\Application\UseCase;
 
-use setasign\Fpdi\Fpdi;
-use Gabriellopes\Pdfmanager\Application\Service\FileProvider;
+use Gabriellopes\Pdfmanager\Application\Service\FileShape;
+use Gabriellopes\Pdfmanager\Application\Service\PDFHandler;
 use Gabriellopes\Pdfmanager\MergePDFRequest;
 use RuntimeException;
 
 class MergePDF
 {
-    private Fpdi $pdf;
-
-    public function __construct(private FileProvider $fileProvider)
-    {
-        $this->pdf = new Fpdi();
-    }
+    public function __construct(private readonly PDFHandler $pdfHandler) {}
 
     public function execute(MergePDFRequest $request): void
     {
@@ -22,18 +17,14 @@ class MergePDF
             throw new RuntimeException("Empty files to merge");
         }
         foreach ($request->toMerge() as $file) {
-            $stream = $this->fileProvider->getFileWith($file->filename());
-            $pageCount = $this->pdf->setSourceFile($stream);
-            for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++) {
+            $pageHandler = $this->pdfHandler->loadFile($file->filename());
+            for ($pageNumber = 1; $pageNumber <= $pageHandler->pagesCount(); $pageNumber++) {
                 if (in_array($pageNumber, $file->ignorePages())) {
                     continue;
                 }
-                $templateID = $this->pdf->importPage($pageNumber);
-                $this->pdf->getTemplateSize($templateID);
-                $this->pdf->addPage();
-                $this->pdf->useTemplate($templateID, 0, 0, 210);
+                $pageHandler->importPage($pageNumber, FileShape::A4);
             }
         }
-        $this->pdf->Output("F", "tmp/{$request->outFilename()}.pdf", true);
+        $this->pdfHandler->writeTo($request->outFilename());
     }
 }
