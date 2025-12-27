@@ -11,7 +11,7 @@ class FpdiService implements PDFHandler
 {
     private readonly Fpdi $fpdi;
 
-    public function __construct(private string $resourcesDir)
+    public function __construct(private readonly string $resourcesDir)
     {
         $this->fpdi = new Fpdi();
     }
@@ -27,15 +27,22 @@ class FpdiService implements PDFHandler
         if (!file_exists($filepath)) {
             throw new \RuntimeException("File not found: $filepath");
         }
+        $fpdi = $this->fpdi;
         $pageCount = $this->fpdi->setSourceFile($filepath);
-        return new FpdiPageHandler($this->fpdi, $pageCount);
+        $onImportPage = function (int $pageNumber, FileShape $shape) use ($fpdi) {
+            $templateID = $this->fpdi->importPage($pageNumber);
+            $fpdi->getTemplateSize($templateID);
+            $fpdi->addPage();
+            $fpdi->useTemplate($templateID, 0, 0, $shape->value);
+        };
+        return new FpdiPageHandler($onImportPage, $pageCount);
     }
 }
 
 class FpdiPageHandler implements PDFPageHandler
 {
     public function __construct(
-        private readonly Fpdi $fpdi,
+        private $onImportPage,
         private readonly int $pagesCount
     ) {}
 
@@ -46,9 +53,6 @@ class FpdiPageHandler implements PDFPageHandler
 
     public function importPage(int $pageNumber, FileShape $shape): void
     {
-        $templateID = $this->fpdi->importPage($pageNumber);
-        $this->fpdi->getTemplateSize($templateID);
-        $this->fpdi->addPage();
-        $this->fpdi->useTemplate($templateID, 0, 0, 210);
+        ($this->onImportPage)($pageNumber, $shape);
     }
 }
