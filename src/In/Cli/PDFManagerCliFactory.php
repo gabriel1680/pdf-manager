@@ -4,7 +4,7 @@ namespace Gabriellopes\Pdfmanager\In\Cli;
 
 use Gabriellopes\Pdfmanager\In\Cli\Command\Merge\MergePDFCommand;
 use Gabriellopes\Pdfmanager\In\CLI\PDFManagerCli;
-use Gabriellopes\Pdfmanager\PDFManagerFactory;
+use Gabriellopes\Pdfmanager\Application\PDFManagerFactory;
 
 class PDFManagerCliFactory
 {

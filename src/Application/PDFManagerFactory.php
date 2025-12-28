@@ -1,10 +1,10 @@
 <?php
 
-namespace Gabriellopes\Pdfmanager;
+namespace Gabriellopes\Pdfmanager\Application;
 
-use Gabriellopes\Pdfmanager\Application\PDFManagerImpl;
 use Gabriellopes\Pdfmanager\Application\UseCase\MergePDF;
 use Gabriellopes\Pdfmanager\Out\File\FpdiService;
+use Gabriellopes\Pdfmanager\PDFManager;
 
 class PDFManagerFactory
 {
