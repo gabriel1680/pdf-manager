@@ -3,8 +3,6 @@
 namespace Gabriellopes\Pdfmanager\In\CLI;
 
 use Gabriellopes\Pdfmanager\In\Cli\Command\CliCommand;
-use Gabriellopes\Pdfmanager\In\Cli\Command\Merge\MergePDFCommand;
-use Gabriellopes\Pdfmanager\PDFManager;
 use RuntimeException;
 
 class PDFManagerCli
@@ -12,18 +10,12 @@ class PDFManagerCli
     /** @var CliCommand[] */
     private array $commands;
 
-    public function __construct(private PDFManager $pdfManager)
+    public function __construct()
     {
         $this->commands = [];
-        $this->bindCommands();
     }
 
-    private function bindCommands()
-    {
-        $this->register("merge", new MergePDFCommand($this->pdfManager->merge(...)));
-    }
-
-    private function register(string $name, CliCommand $command): void
+    public function register(string $name, CliCommand $command): void
     {
         $this->commands[$name] = $command;
     }
