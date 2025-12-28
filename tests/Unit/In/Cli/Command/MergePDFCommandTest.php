@@ -128,11 +128,56 @@ final class MergePDFCommandTest extends TestCase
     public function testSpecFileWithValidData()
     {
         $this->expectNotToPerformAssertions();
-        $content = '{"output": {"file": "some.pdf"}, "inputs": [{ "file": "abc.json", "exclude": [1] }]}';
+        $content = SpecBuilder::builder()
+            ->withOuput("some.pdf")
+            ->addInput("abc.json", [1])
+            ->build();
         $file = vfsStream::newFile("valid-data.json")
-            ->withContent($content)
+            ->withContent(json_encode($content))
             ->at($this->root);
         $options = ['spec' => $file->url()];
         $this->sut->run($options);
+    }
+}
+
+class SpecBuilder
+{
+    private string $output;
+    private array $inputs;
+
+    private function __construct()
+    {
+        $this->inputs = [];
+    }
+
+    public static function builder(): self
+    {
+        return new SpecBuilder();
+    }
+
+    public function withOuput(string $file): self
+    {
+        $this->output = $file;
+        return $this;
+    }
+
+    public function withInputs(array $inputs): self
+    {
+        $this->inputs = $inputs;
+        return $this;
+    }
+
+    public function addInput(string $filename, array $exclude): self
+    {
+        $this->inputs[] = ["file" => $filename, "exclude" => $exclude];
+        return $this;
+    }
+
+    public function build(): array
+    {
+        return [
+            "output" => ["file" => $this->output],
+            "inputs" => $this->inputs
+        ];
     }
 }
