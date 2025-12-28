@@ -4,6 +4,7 @@ namespace Gabriellopes\Pdfmanager\In\Cli\Command\Merge;
 
 use Closure;
 use Gabriellopes\Pdfmanager\In\Cli\Command\CliCommand;
+use RuntimeException;
 
 class MergePDFCommand implements CliCommand
 {
@@ -24,7 +25,7 @@ class MergePDFCommand implements CliCommand
     public function run(array $options): void
     {
         if (!isset($options['spec'])) {
-            throw new \RuntimeException("Missing required --spec option");
+            throw new RuntimeException("Missing required --spec option");
         }
         $specData = $this->validator->validate($options['spec']);
         $request = $this->mapper->map($specData);

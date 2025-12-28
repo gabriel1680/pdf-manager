@@ -14,12 +14,9 @@ class MergeSpecValidator
     public function validate(string $specPath): array
     {
         $this->assertFileExists($specPath);
-
         $data = $this->decodeJson($specPath);
-
         $this->assertRootStructure($data);
         $this->assertInputs($data['inputs']);
-
         return $this->normalize($data);
     }
 
@@ -82,23 +79,10 @@ class MergeSpecValidator
                 throw new RuntimeException("Input #{$index} missing valid file");
             }
 
-            if (isset($input['include'])) {
-                $this->assertInclude($input['include'], $index);
-            }
-
             if (isset($input['exclude'])) {
                 $this->assertPageList($input['exclude'], "exclude", $index);
             }
         }
-    }
-
-    private function assertInclude(mixed $include, int $index): void
-    {
-        if ($include === 'all') {
-            return;
-        }
-
-        $this->assertPageList($include, "include", $index);
     }
 
     private function assertPageList(mixed $pages, string $field, int $index): void
