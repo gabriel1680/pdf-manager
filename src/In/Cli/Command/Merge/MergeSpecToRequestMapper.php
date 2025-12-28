@@ -4,7 +4,6 @@ namespace Gabriellopes\Pdfmanager\In\Cli\Command\Merge;
 
 use Gabriellopes\Pdfmanager\MergePDFFile;
 use Gabriellopes\Pdfmanager\MergePDFRequest;
-use RuntimeException;
 
 class MergeSpecToRequestMapper
 {
@@ -13,9 +12,6 @@ class MergeSpecToRequestMapper
      */
     public function map(array $spec): MergePDFRequest
     {
-        if (!isset($spec['output']['file'], $spec['inputs'])) {
-            throw new RuntimeException('Invalid spec structure provided to translator');
-        }
         $files = [];
         foreach ($spec['inputs'] as $input) {
             $files[] = new MergePDFFile($input['file'], $input['exclude']);
