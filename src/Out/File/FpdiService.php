@@ -21,7 +21,7 @@ class FpdiService implements PDFHandler
         $this->fpdi->Output("F", "tmp/{$filename}", true);
     }
 
-    public function loadFile(string $filename): PDFPageHandler
+    public function readFrom(string $filename): PDFPageHandler
     {
         $filepath = $this->resourcesDir . "/" . $filename;
         if (!file_exists($filepath)) {
@@ -51,7 +51,7 @@ class FpdiPageHandler implements PDFPageHandler
         return $this->pagesCount;
     }
 
-    public function importPage(int $pageNumber, FileShape $shape): void
+    public function usePage(int $pageNumber, FileShape $shape): void
     {
         ($this->onImportPage)($pageNumber, $shape);
     }

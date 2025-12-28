@@ -35,7 +35,7 @@ class MergePDFTest extends TestCase
     public function testShouldThrowWhenFileDoesNotExists(): void
     {
         $this->pdfHandler
-            ->shouldReceive('loadFile')
+            ->shouldReceive('readFrom')
             ->andThrow(new RuntimeException());
         $input = new MergePDFRequest("invalid resource name", new MergePDFFile("a-file.pdf", []));
         $this->expectException(RuntimeException::class);
@@ -46,7 +46,7 @@ class MergePDFTest extends TestCase
     {
         $pageHandler = new MockPDFPageHandler(1);
         $this->pdfHandler
-            ->shouldReceive('loadFile')
+            ->shouldReceive('readFrom')
             ->andReturn($pageHandler);
         $this->pdfHandler->shouldReceive('writeTo')->once();
         $toMerge = [
@@ -65,7 +65,7 @@ class MergePDFTest extends TestCase
     {
         $pageHandler = new MockPDFPageHandler(2);
         $this->pdfHandler
-            ->shouldReceive('loadFile')
+            ->shouldReceive('readFrom')
             ->andReturn($pageHandler);
         $this->pdfHandler->shouldReceive('writeTo')->once();
         $toMerge = [
@@ -112,7 +112,7 @@ final class MockPDFPageHandler implements PDFPageHandler
         return $this->pagesCount;
     }
 
-    public function importPage(int $pageNumber, FileShape $shape): void
+    public function usePage(int $pageNumber, FileShape $shape): void
     {
         $this->importedPages[] = new ImportedPage($pageNumber, $shape);
     }

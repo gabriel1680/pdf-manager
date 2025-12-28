@@ -17,12 +17,12 @@ class MergePDF
             throw new RuntimeException("Empty files to merge");
         }
         foreach ($request->toMerge() as $file) {
-            $pageHandler = $this->pdfHandler->loadFile($file->filename());
+            $pageHandler = $this->pdfHandler->readFrom($file->filename());
             for ($pageNumber = 1; $pageNumber <= $pageHandler->pagesCount(); $pageNumber++) {
                 if (in_array($pageNumber, $file->ignorePages())) {
                     continue;
                 }
-                $pageHandler->importPage($pageNumber, FileShape::A4);
+                $pageHandler->usePage($pageNumber, FileShape::A4);
             }
         }
         $this->pdfHandler->writeTo($request->outFilename());
